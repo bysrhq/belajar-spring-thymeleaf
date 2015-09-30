@@ -1,0 +1,182 @@
+<html
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        
+        <script
+            src="../js/jquery.min.js"
+            th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+        <script
+            src="../js/bootstrap.min.js"
+            th:src="@{/webjars/bootstrap/3.3.5/js/bootstrap.min.js}"></script>
+        
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="../css/bootstrap.min.css"
+            th:href="@{/webjars/bootstrap/3.3.5/css/bootstrap.css}"/>
+        
+        <title>SaleSystem | Mobile Transaction for Retail-Store Oriented Micro Business</title>
+    </head>
+    <body>
+        <div class="col-md-2">
+            
+        </div>
+        <div class="col-md-8" th:unless="${#lists.isEmpty(allSeedStarters)}">
+            <h2> List of Seed Starters</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Date Planted</th>
+                        <th>Covered</th>
+                        <th>Type</th>
+                        <th>Rows</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="sb : ${allSeedStarters}">
+                        <td th:text="${{sb.datePlanted}}">13/01/2011</td>
+                        <td th:text="${sb.covered}? #{bool.true} : #{bool.false}">13/01/2011</td>
+                        <td th:text="${sb.type}">PLASTIC</td>
+                        <td>
+                            <table class="table">
+                                <tr th:each="row,rowStat : ${sb.rows}">
+                                    <td th:text="${rowStat.count}">1</td>
+                                    <td th:text="${row.variety.name}">Apple</td>
+                                    <td th:text="${row.seedsPerCell}">12</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="container-fluid">
+            <div class="col-md-2">
+            
+            </div>
+            <div class="col-md-8">
+                <form
+                    class="form-horizontal"
+                    action="#"
+                    th:action="@{/seedstartermng}"
+                    th:object="${seedStarter}"
+                    method="POST">
+                    <div class="form-group">
+                        <label
+                            for="datePlanted"
+                            th:for="'datePlanted'">
+                            Date Planted
+                        </label>
+                        <input
+                            class="form-control"
+                            type="text"
+                            th:field="*{datePlanted}"
+                            name="datePlanted"
+                            />
+                    </div>
+                    <div class="form-group">
+                        <label
+                            for="covered"
+                            th:for="${#ids.next('covered')}"
+                            >
+                            Covered
+                        </label>
+                        <div class="checkbox">
+                            <label>
+                                <input
+                                    type="checkbox"
+                                    th:field="*{covered}"
+                                />
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label
+                            class="control-label"
+                            for="type"
+                            th:for="'type'"
+                            >
+                            Type   
+                        </label>
+                        <select
+                            class="form-control"
+                            th:field="*{type}"
+                            >
+                            <option
+                                th:each="type : ${allTypes}"
+                                th:value="${type}"
+                                th:text="${type}"
+                                >
+                                PLASTIC
+                            </option>
+                        </select>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Row</th>
+                                <th>Variety</th>
+                                <th>Seeds per Cell</th>
+                                <th>
+                                    <button
+                                        class="btn btn-default"
+                                        type="submit"
+                                        name="addRow"
+                                    >
+                                        Add Row
+                                    </button>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="row,rowStat: *{rows}">
+                                <td th:text="${rowStat.count}">1</td>
+                                <td>
+                                    <select
+                                        th:field="*{rows[__${rowStat.index}__].variety}"
+                                        >
+                                            <option
+                                                th:each="var : ${allVarieties}"
+                                                th:value="${var.id}"
+                                                th:text="${var.name}">
+                                                    Durian
+                                            </option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input
+                                        class="form-control"
+                                        type="text"
+                                        th:text="*{rows[__${rowStat.index}__].seedsPerCell}"
+                                    />
+                                </td>
+                                <td>
+                                    <button
+                                        class="btn btn-default"
+                                        type="submit"
+                                        name="removeRow"
+                                        th:value="${rowStat.index}"
+                                    >
+                                        Remove
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="form-group">
+                        <button
+                            class="btn btn-default"
+                            type="submit"
+                            name="save"
+                        >
+                            Save
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

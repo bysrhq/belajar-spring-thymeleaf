@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+
+<html
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        
+        <script
+            src="../js/jquery.min.js"
+            th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+        <script
+            src="../js/bootstrap.min.js"
+            th:src="@{/webjars/bootstrap/3.3.5/js/bootstrap.min.js}"></script>
+        
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="../css/bootstrap.min.css"
+            th:href="@{/webjars/bootstrap/3.3.5/css/bootstrap.css}"/>
+        
+        <title>SaleSystem | Mobile Transaction for Retail-Store Oriented Micro Business</title>
+    </head>
+    <body>
+        <!--
+            Navigation Bar Layout Properties
+        -->
+        <div class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button 
+                        class="navbar-toggle collapsed" 
+                        type="button"
+                        data-toggle="collapse" data-target="#dropdown-me">
+                        <span class="glyphicon glyphicon-menu-hamburger"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">SaleSystem</a>
+                </div>
+                <div class="collapse navbar-collapse" id="dropdown-me">
+                    <ul class="nav navbar-nav">
+                        <li class="active">
+                            <a
+                                href="itemList.html"
+                                th:href="@{/item}">Item</a>
+                        </li>
+                        <li>
+                            <a
+                                href="transactionList.html"
+                                th:href="@{/transaction}">Transaction</a>
+                        </li>
+                        <li><a
+                                href="aboutPage.html"
+                                th:href="@{/about}">About</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" href="#" data-toggle="dropdown">
+                                Login <span class="glyphicon glyphicon-login"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a
+                                        href="user/profile.html"
+                                        th:href="@{/user/hendra}">
+                                        Profile
+                                    </a>
+                                </li>
+                                <li data-toggle="modal" data-target="#modal-login">
+                                    <a 
+                                        href="homePage.html"
+                                        th:href="@{#}">
+                                        Logout
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--
+            Content Layout Properties
+        -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-2">
+                    
+                </div>
+                <div class="col-xs-12 col-md-8">
+                    <div class="alert alert-info alert-dismissable">
+                        <button class="close" type="button" data-dismiss="alert">
+                            &times;
+                        </button>
+                        <b><span class="glyphicon glyphicon-info-sign"></span> Info!</b>
+                        <span th:text="#{homepage.welcome}">Welcome</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+         
+    </body>
+</html>
